@@ -1,0 +1,96 @@
+<!doctype html>
+
+<html>
+    <head>
+        <title>DRUMPACT - Swiss Central Drum Union</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body>
+        <div class="teaser">
+            <div class="logo-container">
+                <img src="drumpact-logo.png" alt="drumpact-logo" />
+
+                <div class="icons">
+                    <a href="https://www.instagram.com/drumpact/"><img src="instagram-icon.png" alt="instagram" /></a>
+                    <a href="https://www.youtube.com/channel/UCKGrlMiJayiUPF6Xl7TAxAw"><img src="youtube-icon.png" alt="instagram" /></a>
+                    <a class="contact" href="mailto:info@drumpact.ch">Kontakt</a>
+                </div>
+            </div>
+            <div id="next-event" class="info-container">
+                <video loop autoplay muted>
+                    <source src="drumpact.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <div class="intro-text">
+            <div class="text">
+                <h2>DRUMPACT - DAS SIND WIR</h2>
+
+                Das 2017 neu gegründete Corps DrumPact setzt sich aus den besten Tambouren der Zentralschweiz zusammen
+                und vertritt die Erlebnisregion Mythen als musikalischer Botschafter im In- und Ausland.
+                Die jungen, ambitionierten Trommler verbinden Schlagtechniken verschiedener Traditionen
+                zu groovigen und gehörfälligen Rhythmen und inszenieren sie mit perfekt choreografierten visuellen Effekten
+                und amüsanter Schlegel-Akrobatik. Das Corps steht unter der Leitung von Remo Betschart, Roman Vogel und Martin Grätzer.
+            </div>
+            <div class="partner">
+                <h2>UNSER PARTNER</h2>
+                <img src="partner.png" alt="partner" />
+            </div>
+        </div>
+
+        <div class="images">
+            <picture>
+                <source srcset="drumpact-mob.png" media="(max-width: 1200px)"/>
+                <img src="drumpact.png" />
+            </picture>
+        </div>
+
+        <div id="events" class="next-events">
+            <h2>NÄCHSTE AUFTRITTE</h2>
+            <!-- WILL BE FILLED DYNAMICALLY -->
+        </div>
+
+        <script type="text/javascript">
+
+            window.addEventListener("DOMContentLoaded", async () => {
+
+                const response = await fetch(`https://www.googleapis.com/calendar/v3/calendars/info.drumpact@gmail.com/events?key=AIzaSyBXk66d_8WeTHsB8UpZr2-1FGFDXXrLECc&timeMin=${new Date().toISOString()}`);
+                if (!response.ok) {
+                    console.error(response);
+                }
+                const events = await response.json();
+                console.log(events);
+
+                for (const event of events.items) {
+                    document.getElementById('events').insertAdjacentHTML(
+                        "beforeend",
+                        ` <div class="event">
+                                <b>${event.summary} (${event.start.date} - ${event.end.date})</b>
+                                <p>
+                                    ${event.description}
+                                </p>
+                                <div class="divider"></div>
+                        </div>`
+                    );
+                }
+
+                // put the next event to the teaser
+                const event = events.items[0];
+                document.getElementById('next-event').insertAdjacentHTML(
+                    "beforeend",
+                    `<div class="next-event">
+                        Nächster Auftritt: &nbsp
+                        <b>${event.summary} <br />(${event.start.date} - ${event.end.date})</b>
+                        <a href="#events">Zu allen Auftritten →</a>
+                    </div>`
+                );
+
+            }, false);
+        </script>
+    </body>
+</html>
