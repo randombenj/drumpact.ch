@@ -5,6 +5,8 @@
         <title>DRUMPACT - Swiss Central Drum Union</title>
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open Sans">
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <meta name="theme-color" content="#fafafa">
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
@@ -20,7 +22,7 @@
                 </div>
             </div>
             <div id="next-event" class="info-container">
-                <video loop autoplay muted>
+                <video autoplay loop muted playsinline>
                     <source src="drumpact.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
@@ -35,7 +37,7 @@
                 und vertritt die Erlebnisregion Mythen als musikalischer Botschafter im In- und Ausland.
                 Die jungen, ambitionierten Trommler verbinden Schlagtechniken verschiedener Traditionen
                 zu groovigen und gehörfälligen Rhythmen und inszenieren sie mit perfekt choreografierten visuellen Effekten
-                und amüsanter Schlegel-Akrobatik. Das Corps steht unter der Leitung von Remo Betschart, Roman Vogel und Martin Grätzer.
+                und amüsanter Schlegel-Akrobatik.
             </div>
             <div class="partner">
                 <h2>UNSER PARTNER</h2>
@@ -52,7 +54,15 @@
 
         <div id="events" class="next-events">
             <h2>NÄCHSTE AUFTRITTE</h2>
-            <!-- WILL BE FILLED DYNAMICALLY -->
+            <div id="events-container">
+                <!-- WILL BE FILLED DYNAMICALLY -->
+                <i>Momentan sind keine Auftritte geplant ...</i>
+            </div>
+        </div>
+
+        <div class="partner-mobile">
+            <h2>UNSER PARTNER</h2>
+            <img src="partner.png" alt="partner" />
         </div>
 
         <script type="text/javascript">
@@ -64,20 +74,23 @@
                     console.error(response);
                 }
                 const events = await response.json();
-                console.log(events);
 
-                for (const event of events.items) {
-                    document.getElementById('events').insertAdjacentHTML(
-                        "beforeend",
-                        ` <div class="event">
-                                <b>${event.summary} (${event.start.date} - ${event.end.date})</b>
-                                <p>
-                                    ${event.description}
-                                </p>
-                                <div class="divider"></div>
-                        </div>`
-                    );
-                }
+                document.getElementById("events-container").innerHTML = events.items.map((e) =>
+                    `<div class="event">
+                        <b>${e.summary}</b>
+                        <p class="date">(${
+                            e.start.date ? new Date(e.start.date).toLocaleDateString("de-CH") :
+                            new Date(e.start.dateTime).toLocaleString("de-CH").slice(0, -3)
+                        } - ${
+                            e.end.date ? new Date(e.end.date).toLocaleDateString("de-CH") :
+                            new Date(e.end.dateTime).toLocaleString("de-CH").slice(0, -3)
+                        })</p>
+                        <p>
+                            ${e.description}
+                        </p>
+                        <div class="divider"></div>
+                    </div>`
+                ).join("\n");
 
                 // put the next event to the teaser
                 const event = events.items[0];
@@ -85,7 +98,13 @@
                     "beforeend",
                     `<div class="next-event">
                         Nächster Auftritt: &nbsp
-                        <b>${event.summary} <br />(${event.start.date} - ${event.end.date})</b>
+                        <b>${event.summary}</b> <br />(${
+                            event.start.date ? new Date(event.start.date).toLocaleDateString("de-CH") :
+                            new Date(event.start.dateTime).toLocaleString("de-CH").slice(0, -3)
+                        } - ${
+                            event.end.date ? new Date(event.end.date).toLocaleDateString("de-CH") :
+                            new Date(event.end.dateTime).toLocaleString("de-CH").slice(0, -3)
+                        })
                         <a href="#events">Zu allen Auftritten →</a>
                     </div>`
                 );

@@ -117,14 +117,18 @@ h2 {
     margin-top: 60px;
 }
 
-.intro-text .partner {
+.partner-mobile {
+    display: none;
+}
+
+.partner {
     float: right;
     width: 360px;
     margin-top: 60px;
     margin-left: 40px
 }
 
-.intro-text .partner > img {
+.partner > img {
     width: 400px;
 }
 
@@ -154,6 +158,10 @@ h2 {
     border-bottom: 1px solid #9c9c9c;
 }
 
+.event > .date {
+    margin-top: 4px;
+}
+
 .next-event a {
     color: white;
     margin-top: 10px;
@@ -181,7 +189,8 @@ h2 {
 
     .teaser,
     .intro-text,
-    .next-events {
+    .next-events,
+    .partner-mobile {
         width: 90%;
         margin-left: auto;
         margin-right: auto;
@@ -191,6 +200,17 @@ h2 {
     .partner,
     .partner img {
         width: 100% !important;
+    }
+
+    .partner {
+        display: none;
+    }
+
+    .partner-mobile {
+        display: block;
+    }
+    .partner-mobile img {
+        width: 100%;
     }
 
     .info-container > video {
