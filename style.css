@@ -77,18 +77,14 @@ h2 {
 }
 
 .info-container {
-    filter: url(#round);
     height: 100%;
     float: right;
     width: 600px;
     border-radius: 20px;
-    /* background-color: rgb(34, 34, 34); */
     background-color: rgb(0, 0, 0);
 
     border-top-left-radius: 10%;
-    /* clip-path: inset(0 0 0 0 round 40% 0% 0%); */
-    /* clip-path: polygon(43% 19%, 40% 0, 100% 0, 100% 100%, 0 100%, 19% 87%, 34% 69%, 41% 43%); */
-    /* clip-path: polygon(29% 13%, 26% 0, 100% 0, 100% 100%, 0 100%, 10% 89%, 18% 78%, 25% 63%, 28% 49%, 30% 31%); */
+
 }
 
 .info-container video {
